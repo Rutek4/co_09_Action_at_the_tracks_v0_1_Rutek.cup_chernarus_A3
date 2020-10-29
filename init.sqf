@@ -1,5 +1,5 @@
 if (isServer) then {
-	//test123
+
 	{ [_x, 1] remoteExecCall ["rtk_fnc_hideMarker", 2]; } forEach [
 	 'Marker HQ',
 	'Marker Squad 1',
