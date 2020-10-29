@@ -1,0 +1,333 @@
+#include "scripts\endscreen\definitions\rscdefinitions.hpp"
+#include "scripts\endscreen\definitions\endScreenDef.hpp"
+
+// briefingName ="co xx Opportunity Knocks";
+overviewText = "2nd Platoon podczas przemieszczania się w kierunku OBJ Pistol wpada w zasadzkę przeciwnika.";
+onLoadIntroTime = false;
+onLoadMissionTime = false;
+author = "Rutek 10.2020 v0.1";
+OnLoadName = "Action at the tracks";
+onLoadMission = "Semper Primus (""Always First"")";
+LoadScreen = "images\overview.jpg";
+overviewPicture = "images\overview.jpg";
+disableChannels[] = {2,5,6};
+forceRotorLibSimulation = 0;
+respawnButton = 0;
+respawn = "BIRD";
+respawnTemplates[] = { "ace_spectator" };
+joinUnassigned = 1;
+disabledAI = 0;
+enableDebugConsole = 1;
+
+class Header
+{
+     gameType=COOP;
+     minPlayers=1;
+     maxPlayers=9;
+};
+
+class CfgFunctions
+{
+	class rtk
+	{
+		class utilities
+        {
+         	file = "scripts\functions";
+         	class cacheGroup {};
+			class cacheLayer {};
+			class disableAIGroup {};
+			class disableAIUnit {};
+			class enableAIGroup {};
+			class restartEquipment {};
+			class setMarkersAlpha {};
+			class unCacheGroup {};
+			class unitgear {};
+			class unitSurrender {};
+			class countInAreaArray {};
+			class exitVehicle {};
+			class radioMsg {};
+			class radioSound {};
+			class suppress {};
+        };
+
+        class animatedBriefing
+        {
+         	file = "scripts\animatedBriefing\functions";
+			class showMarker {};
+			class hideMarker {};
+			class moveMarker {};
+			class blinkMarker {};
+        };
+
+		class endScreen
+		{
+			file = "scripts\endscreen\functions";
+			class getTeamSummary {};
+			class stackNames {};
+			class endMissionEvent {};
+			class getDamagedAssets {};
+		};
+	};
+};
+
+class CfgDebriefing
+{  
+	class endMission
+	{
+		title = "Koniec, czas na debrief!";
+		subtitle = "Dzięki za wspólną grę!";
+		pictureBackground = "pictures\overview.jpg";
+		picture = "pictures\outro.paa";
+		pictureColor[] = {1.0,1.0,1.0,1};
+	};
+};
+
+class CfgSounds
+{
+
+	class SL1_1
+	{
+		name = "SL1_1"; //Tutaj 1, mamy 2 ciężko rannych, pilnie potrzebujemy pomocy medycznej, odbiór.
+		sound[] = {"sounds\SL1_1.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL1_2
+	{
+		name = "SL1_2"; //Tu 1, przyjąłem.
+		sound[] = {"sounds\SL1_2.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL2_1
+	{
+		name = "SL2_1"; //6 tu 2, przeciwnik wycofuje się w kierunku drogi, powtarzam, przeciwnik wycofuje się w kierunku drogi, odbiór.
+		sound[] = {"sounds\SL2_1.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL2_2
+	{
+		name = "SL2_2"; //1 tu 2, podchodzimy od wschodu, odbiór.
+		sound[] = {"sounds\SL2_2.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL2_3
+	{
+		name = "SL2_3"; //3 tutaj 2, uważajcie, podchodzimy od południowego-wchodu, odbiór.
+		sound[] = {"sounds\SL2_3.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL2_4
+	{
+		name = "SL2_4"; //2 na pozycji.
+		sound[] = {"sounds\SL2_4.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class SL2_5
+	{
+		name = "SL2_5"; //2 przyjął.
+		sound[] = {"sounds\SL2_5.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_1
+	{
+		name = "PL_1"; //1 tu 6, podaj status.
+		sound[] = {"sounds\PL_1.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_2
+	{
+		name = "PL_2"; //1 tu 6, przyjąłem, zaraz będziemy na waszej pozycji. Pomoc w drodze, odbiór.
+		sound[] = {"sounds\PL_2.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_3
+	{
+		name = "PL_3"; //3 tu 6, pojazd przeciwnika zmierza w waszym kierunku od północnego zachodu, odbiór.
+		sound[] = {"sounds\PL_3.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_4
+	{
+		name = "PL_4"; //3 tutaj 6, przyjąłem. Dobra robota. W waszym kierunku udaje się 2 wraz z medykiem, break.
+		sound[] = {"sounds\PL_4.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_5
+	{
+		name = "PL_5"; //Jeżeli macie potrzebe to uzupełnijcie zapasy medyczne z jego plecaka, odbiór.
+		sound[] = {"sounds\PL_5.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_6
+	{
+		name = "PL_6"; //Tutaj 6 do wszystkich, prawdopodobnie nadal mamy przeciwnika w okolicy, break.
+		sound[] = {"sounds\PL_6.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_7
+	{
+		name = "PL_7"; //Dron wypatrzył ruch obok stodoły, 200m na południowy-zachód od aktualnej pozycji 3, odbiór.
+		sound[] = {"sounds\PL_7.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_8
+	{
+		name = "PL_8"; //3 udajcie się w okolice stodoły, aby to sprawdzić, odbiór.
+		sound[] = {"sounds\PL_8.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_9
+	{
+		name = "PL_9"; //2 tu 6, ubezpieczaj 3, odbiór.
+		sound[] = {"sounds\PL_9.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class PL_10
+	{
+		name = "PL_10"; //2 tu 6, wycofujemy się z 1 na waszą aktualną pozycję, odbiór.
+		sound[] = {"sounds\PL_10.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class PL_11
+	{
+		name = "PL_11"; //Tutaj 6 do wszystkich elementów, od wschodu podchodzi 3 pluton, powtarzam, sojusznik od wschodu, odbiór.
+		sound[] = {"sounds\PL_11.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class PL_12
+	{
+		name = "PL_12"; //3 tu 6, w razie napotkania przeawżających sił przeciwnika, wycofaj się na poprzednią pozycję, odbiór.
+		sound[] = {"sounds\PL_12.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class PL_13
+	{
+		name = "PL_13"; //3 tu 6, co wy robicie, kazałem wam flankować od północy, odbiór.
+		sound[] = {"sounds\PL_13.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class N_1
+	{
+		name = "N_1"; //1 tu 6, podaj status.
+		sound[] = {"sounds\N_1.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_2
+	{
+		name = "N_2"; //1 tu 6, przyjąłem, zaraz będziemy na waszej pozycji. Pomoc w drodze, odbiór.
+		sound[] = {"sounds\N_2.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_3
+	{
+		name = "N_3"; //3 tu 6, pojazd przeciwnika zmierza w waszym kierunku od północnego zachodu, odbiór.
+		sound[] = {"sounds\N_3.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_4
+	{
+		name = "N_4"; //3 tutaj 6, przyjąłem. Dobra robota. W waszym kierunku udaje się 2 wraz z medykiem, break.
+		sound[] = {"sounds\N_4.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_5
+	{
+		name = "N_5"; //Jeżeli macie potrzebe to uzupełnijcie zapasy medyczne z jego Necaka, odbiór.
+		sound[] = {"sounds\N_5.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_6
+	{
+		name = "N_6"; //Tutaj 6 do wszystkich, prawdopodobnie nadal mamy przeciwnika w okolicy, break.
+		sound[] = {"sounds\N_6.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_7
+	{
+		name = "N_7"; //Dron wypatrzył ruch obok stodoły, 200m na południowy-zachód od aktualnej pozycji 3, odbiór.
+		sound[] = {"sounds\N_7.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_8
+	{
+		name = "N_8"; //3 udajcie się w okolice stodoły, aby to sprawdzić, odbiór.
+		sound[] = {"sounds\N_8.ogg", 2, 1};
+		titles[] = {1, ""};
+	};
+
+	class N_PL_1
+	{
+		name = "N_PL_1"; //1 tu 6, podaj status.
+		sound[] = {"sounds\N_PL_1.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_PL_2
+	{
+		name = "N_PL_2"; //1 tu 6, przyjąłem, zaraz będziemy na waszej pozycji. Pomoc w drodze, odbiór.
+		sound[] = {"sounds\N_PL_2.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_PL_3
+	{
+		name = "N_PL_3"; //3 tu 6, pojazd przeciwnika zmierza w waszym kierunku od północnego zachodu, odbiór.
+		sound[] = {"sounds\N_PL_3.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+
+	class N_PL_4
+	{
+		name = "N_PL_4"; //Dron wypatrzył ruch obok stodoły, 200m na południowy-zachód od aktualnej pozycji 3, odbiór.
+		sound[] = {"sounds\N_PL_4.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_SL1_1
+	{
+		name = "N_SL1_1"; //3 tutaj 6, przyjąłem. Dobra robota. W waszym kierunku udaje się 2 wraz z medykiem, break.
+		sound[] = {"sounds\N_SL1_1.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_SL1_2
+	{
+		name = "N_SL1_2"; //Jeżeli macie potrzebe to uzupełnijcie zapasy medyczne z jego Necaka, odbiór.
+		sound[] = {"sounds\N_SL1_2.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+	class N_SL1_3
+	{
+		name = "N_SL1_3"; //Tutaj 6 do wszystkich, prawdopodobnie nadal mamy przeciwnika w okolicy, break.
+		sound[] = {"sounds\N_SL1_3.ogg", 0.25, 1};
+		titles[] = {1, ""};
+	};
+	
+};
